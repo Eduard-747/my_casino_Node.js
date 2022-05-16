@@ -1,0 +1,20 @@
+{
+  "name": "my_new_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.5",
+    "lodash": "^4.17.21",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.16",
+    "typeorm": "^0.2.41"
+  }
+}
