@@ -1,11 +1,13 @@
+
 // Standard requires
 const express = require("express");
 
 // Local requires
 const UserRouter = require("./controller/UserController");
 const CasinoRouter = require("./controller/CasinoController");
+const Util = require('./util/Utils');
 
-const PORT = 3000;
+const PORT = process.env.PORT || Util.getConfigParameter('port');
 
 const app = express();
 

@@ -1,3 +1,4 @@
+
 // Local requires
 const Casino = require('../casino/casino');
 
@@ -5,12 +6,13 @@ let casino_balance = 1000000000;
 
 class CasinoService {
     constructor (client_balance, BET) {
+        
         this.client_balance = client_balance;
         this.BET = BET;
     }
 
-    async SPIN()
-    {
+    SPIN = async() => {
+
         let matrix = await Casino.creatMatrix();
         let win_sum = await Casino.check(matrix, this.BET);
 

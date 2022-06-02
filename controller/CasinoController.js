@@ -1,17 +1,21 @@
+
 // Standart requires
 const router = require("express").Router();
+
+// Library requires
 
 // Local requires
 const CasinoService = require('../services/casinoService');
 const UserService = require("../services/userService");
+const ErrorHandler = require('../util/Utils').getMiddleware();
 
-router.post('/SPIN', (async (req, res) => {
+router.post('/SPIN',  ErrorHandler(async (req, res) => {
    try { 
-        let userBody =  (await UserService.getUser(req.body));
-        let Casino = new CasinoService(userBody.amount, req.query.BET);
+        let userBody =  (await UserService.login(req.body.email, req.body.password));
+        let Casino = new CasinoService(userBody.Amount, req.query.BET);
         let result = await Casino.SPIN();
-        UserService.modifyUserAmount(req.body, Casino.client_balance);
-        return res.send(result);
+        UserService.ChangeAmount(req.body.email, req.body.password, Casino.client_balance);
+        return res.status(200).send(result);
     } catch (error) {
         return res.status(400).json(error.message);
     }

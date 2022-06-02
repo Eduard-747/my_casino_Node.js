@@ -1,36 +1,41 @@
-// Standart requires
-const EntyitySchema = require('typeorm').EntitySchema
+
+// Standard requires
+const EntitySchema = require('typeorm').EntitySchema;
+
+// Library requires
 
 // Local requires
-const UserModel = require('../model/userModel');
+const User = require('../model/User');
 
-module.exports = new EntyitySchema({
-    tableName: 'my_casino_user',
-    target: UserModel,
+module.exports = new EntitySchema({
+
+    tableName: 'User',
+    target: User,
     columns: {
-        id: {
+        ID: {
             primary: true,
             name: 'id',
             type: 'int',
             generated: true,
-            unique: true,
+            unique: true
         },
-        name: {
+        Name: {
             name: 'name',
-            type: 'varchar',
+            type: 'varchar'
         },
-        email: {
+        Email: {
             name: 'email',
             type: 'varchar',
             unique: true
         },
-        password: {
+        Password: {
             name: 'password',
-            type: 'varchar',
+            type: 'varchar'
         },
-        amount: {
+        Amount: {
             name: 'amount',
-            type: 'int',
+            type: 'int'
         }
+
     }
 });

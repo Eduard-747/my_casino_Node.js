@@ -1,8 +1,9 @@
+
 // Standard requires
 const typeorm = require("typeorm");
 
 // Local requires
-const utils = require('../util/utils');
+const utils = require('../util/Utils');
 
 class Typeorm {
 

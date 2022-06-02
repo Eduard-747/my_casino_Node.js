@@ -1,43 +1,50 @@
+
 // Standart requires
-const router = require("express").Router();
+const router = require('express').Router();
+
+// Library requires
 
 // Local requires
-const UserService = require("../services/userService");
+const UserService = require('../services/userService');
+const ErrorHandler = require('../util/Utils').getMiddleware();
 
-router.post("/createUser", (async (req, res) => {
+router.post('/CreateUser', ErrorHandler( async (req, res) => {
     try {
-        await UserService.insertUser(req.body);
-        return res.status(200).json('Ok you insert user');
-    } catch(error) {
-        return res.status(400).json(error.message);
+        return res.status(200).json(await UserService.create(req.body));
+    } catch (err) {
+        return res.status(400).json(err);
     }
 }));
 
-router.put("/changeName", (async (req, res) => {
+router.delete('/DeleteUser', ErrorHandler(async (req, res) => {
     try {
-        await UserService.modifyUserName(req.body);
-        return res.status(200).json('Ok you modify user Name');
-    } catch(error) {
-        return res.status(400).json(error.message);
+        return res.status(200).json(await UserService.delete(req.query.email, req.query.password));
+    } catch (err) {
+        return res.status(400).json(err);
     }
 }));
 
-router.put("/changeAmount", (async (req, res) => {
+router.put('/ChangePassword', ErrorHandler(async (req, res) => {
     try {
-        await UserService.modifyUserAmount(req.body, req.body.amount);
-        return res.status(200).json('Ok you modify user Amount');
-    } catch(error) {
-        return res.status(400).json(error.message);
+        return res.status(200).json(await UserService.ChangePassword(req.body.email, req.body.password, req.body.newPassword));
+    } catch (err) {
+        return res.status(400).json(err);
+    }   
+}));
+
+router.put('/ChangeName', ErrorHandler(async (req, res) => {
+    try {
+        return res.status(200).json(await UserService.ChangeName(req.body.email, req.body.password, req.body.name));
+    } catch (err) {
+        return res.status(400).json(err);
     }
 }));
 
-router.delete("/deleteUser", ( async (req,res) => {
+router.get('/login', ErrorHandler(async (req, res) => {
     try {
-        await UserService.deleteUser(req.query.id); 
-        
-        return res.status(200).json('Ok you delete user');
-    } catch(error) {
-        return res.status(400).json(error.message);
+        return res.status(200).json(await UserService.login(req.query.email, req.query.password));
+    } catch (err) {
+        return res.status(400).json(err);
     }
 }));
 
