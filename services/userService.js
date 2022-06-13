@@ -1,6 +1,6 @@
 
 // Standart requires
-const bcrypt = require('bcrypt');
+const StatusCode = require('http-status-codes').StatusCodes;
 
 // Library requires
 
@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 const Typeorm = require('../database/typeorm');
 const User = require('../database/model/User');
 const Util = require('../util/Utils');
+const error = require('../util/Error');
 
 class UserService {
 
@@ -30,7 +31,11 @@ class UserService {
                     ]).
                     execute();
         if(!result) {
-            throw new Error('error in create user !!');
+            error.UserNotCreated.attributes[0] = user.Name;
+            error.UserNotCreated.attributes[1] = user.Email;
+            error.UserNotCreated.attributes[2] = user.Password;
+            error.UserNotCreated.attributes[3] = user.Amount;
+            throw new Error(user.UserNotCreated.message, { cause: { type: user.UserNotCreated, StatusCode: StatusCode.PRECONDITION_FAILED } });
         }
 
         return result;
@@ -41,7 +46,9 @@ class UserService {
         const hashPassword = (await this.#getUser(email)).Password;
         
         if(!(await Util.ComparePasswords(password, hashPassword))) {
-            throw new Error('error in delete user! uncorrect password or email!');
+            error.UserNotDelete.attributes[0] = email;
+            error.UserNotDelete.attributes[1] = password;
+            throw new Error(error.UserNotDelete.message, { cause: { type: error.UserNotDelete, StatusCode: StatusCode.EXPECTATION_FAILED } });
         }
 
         const result = await Typeorm.connection.
@@ -61,7 +68,9 @@ class UserService {
         const hashPassword = (await this.#getUser(email)).Password;
         
         if(!(await Util.ComparePasswords(password, hashPassword))) {
-            throw new Error('error in update password! uncorrect password or email!');
+            error.PasswordNotChange.attributes[0] = email;
+            error.PasswordNotChange.attributes[1] = password;
+            throw new Error(error.PasswordNotChange.message, { cause: { type: error.PasswordNotChange, StatusCode: StatusCode.EXPECTATION_FAILED } });
         }
 
         const result = await Typeorm.connection.
@@ -82,7 +91,9 @@ class UserService {
         const hashPassword = (await this.#getUser(email)).Password;
         
         if(!(await Util.ComparePasswords(password, hashPassword))) {
-            throw new Error('error in update name! uncorrecr password or email!');
+            error.NameNotChange.attributes[0] = password;
+            error.NameNotChange.attributes[1] = email;
+            throw new Error(error.NameNotChange.message, { cause: { type: error.NameNotChange, StatusCode: StatusCode.EXPECTATION_FAILED } });
         }
 
         const result = await Typeorm.connection.
@@ -104,7 +115,9 @@ class UserService {
         const hashPassword = result.Password;
         
         if(!(await Util.ComparePasswords(password, hashPassword))) {
-            throw new Error('error in login! uncorrect password or email!');
+            error.UserNotLoggin.attributes[0] = password;
+            error.UserNotLoggin.attributes[1] = email;
+            throw new Error(error.UserNotLoggin.message, { cause: { type: error.UserNotLoggin, StatusCode: StatusCode.EXPECTATION_FAILED } });
         }
         
         return result;
@@ -115,7 +128,9 @@ class UserService {
         const hashPassword = (await this.#getUser(email)).Password;
         
         if(!(await Util.ComparePasswords(password, hashPassword))) {
-            throw new Error('error in change amount! uncorrecr password or email!');
+            error.AmmountNotChange.attributes[0] = password;
+            error.AmmountNotChange.attributes[1] = email;
+            throw new Error(error.AmmountNotChange.message, { cause: { type: error.AmmountNotChange, StatusCode: StatusCode.EXPECTATION_FAILED } });
         }
 
         const result = await Typeorm.connection.

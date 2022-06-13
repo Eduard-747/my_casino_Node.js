@@ -56,7 +56,7 @@ class Utils {
 
     static async hash(password)
     {
-        return await bcrypt.hash(password, 8);
+        return await bcrypt.hash(password, 10);
     }
 };
 

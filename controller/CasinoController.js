@@ -1,6 +1,7 @@
 
 // Standart requires
 const router = require("express").Router();
+const StatusCode = require('http-status-codes').StatusCodes;
 
 // Library requires
 
@@ -15,9 +16,9 @@ router.post('/SPIN',  ErrorHandler(async (req, res) => {
         let Casino = new CasinoService(userBody.Amount, req.query.BET);
         let result = await Casino.SPIN();
         UserService.ChangeAmount(req.body.email, req.body.password, Casino.client_balance);
-        return res.status(200).send(result);
+        return res.status(StatusCode.OK).send(result);
     } catch (error) {
-        return res.status(400).json(error.message);
+        return res.status(StatusCode.BAD_REQUEST).json(error.message);
     }
 }));
 
