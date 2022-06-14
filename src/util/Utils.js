@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 // Library requires
 
 // Local requires
-const config = require('../config.json');
+const config = require('../../config.json');
 
 class Utils {
 
