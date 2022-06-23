@@ -65,7 +65,7 @@ class UserService {
 
     ChangePassword = async (email, password, newPassword) => {
 
-        const hashPassword = (await this.#getUser(email)).Password;
+        const hashPassword = (await this.#getUser(email))?.Password;
         
         if(!(await Util.ComparePasswords(password, hashPassword))) {
             error.PasswordNotChange.attributes[0] = email;
@@ -73,10 +73,11 @@ class UserService {
             throw new Error(error.PasswordNotChange.message, { cause: { type: error.PasswordNotChange, StatusCode: StatusCode.EXPECTATION_FAILED } });
         }
 
+        const newHashPassword = await Util.hash(newPassword);
         const result = await Typeorm.connection.
                     createQueryBuilder().
                     update(User).
-                    set({Password: newPassword}).
+                    set({Password: newHashPassword}).
                     where('Email = :Email&&Password = :Password', {
                         Email: email,
                         Password: hashPassword

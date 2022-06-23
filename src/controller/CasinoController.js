@@ -9,13 +9,17 @@ const StatusCode = require('http-status-codes').StatusCodes;
 const CasinoService = require('../services/casinoService');
 const UserService = require("../services/userService");
 const ErrorHandler = require('../util/Utils').getMiddleware();
+const { validate } = require('../validation/Validation');
+const casinoValidation = require('../validation/CasinoValidation');
 
 router.post('/SPIN',  ErrorHandler(async (req, res) => {
    try { 
-        let userBody =  (await UserService.login(req.body.email, req.body.password));
-        let Casino = new CasinoService(userBody.Amount, req.query.BET);
+        const body = await validate(req.body, casinoValidation.SPIN);
+        const { Email, Password, BET } = body;
+        let { Amount } =  await UserService.login(Email, Password);
+        let Casino = new CasinoService(Amount, BET);
         let result = await Casino.SPIN();
-        UserService.ChangeAmount(req.body.email, req.body.password, Casino.client_balance);
+        UserService.ChangeAmount(Email, Password, Casino.client_balance);
         return res.status(StatusCode.OK).send(result);
     } catch (error) {
         return res.status(StatusCode.BAD_REQUEST).json(error.message);

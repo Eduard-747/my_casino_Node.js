@@ -10,6 +10,88 @@
 			"name": "User",
 			"item": [
 				{
+					"name": "Delete Client",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/User/DeleteUser?Email=&Password=",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"User",
+								"DeleteUser"
+							],
+							"query": [
+								{
+									"key": "Email",
+									"value": ""
+								},
+								{
+									"key": "Password",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Email\" : \"\",\n    \"Password\" : \"\",\n    \"newPassword\" : \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/User/ChangePassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"User",
+								"ChangePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Name",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Email\" : \"\",\n    \"Password\" : \"\",\n    \"Name\" : \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/User/ChangeName",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"User",
+								"ChangeName"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create User",
 					"request": {
 						"method": "POST",
@@ -42,7 +124,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/User/login?email=&password=",
+							"raw": "{{url}}/User/login?Email=&Password=",
 							"host": [
 								"{{url}}"
 							],
@@ -52,95 +134,13 @@
 							],
 							"query": [
 								{
-									"key": "email",
+									"key": "Email",
 									"value": ""
 								},
 								{
-									"key": "password",
+									"key": "Password",
 									"value": ""
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Client",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/User/DeleteUser?email=&password=",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"User",
-								"DeleteUser"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": ""
-								},
-								{
-									"key": "password",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Change Password",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\" : \"\",\n    \"password\" : \"\",\n    \"newPassword\" : \"\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/User/ChangePassword",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"User",
-								"ChangePassword"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Change Name",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\" : \"\",\n    \"password\" : \"\",\n    \"name\" : \"\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/User/ChangeName",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"User",
-								"ChangeName"
 							]
 						}
 					},
@@ -158,7 +158,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\" : \"\",\n    \"password\" : \"\"\n}",
+							"raw": "{\n    \"Email\" : \"\",\n    \"Password\" : \"\",\n    \"BET\" : 10\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -166,19 +166,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/Casino/SPIN?BET=10",
+							"raw": "{{url}}/Casino/SPIN",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"Casino",
 								"SPIN"
-							],
-							"query": [
-								{
-									"key": "BET",
-									"value": "10"
-								}
 							]
 						}
 					},
