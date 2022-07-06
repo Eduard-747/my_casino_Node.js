@@ -31,4 +31,9 @@ module.exports = {
         message: 'The ammount has not been changed !!!',
         attributes: [],
     },
+    ValidationError: {
+        id: 603,
+        message: '',
+        attributes: [],
+    },
 }

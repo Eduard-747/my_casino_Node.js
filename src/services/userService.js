@@ -1,6 +1,6 @@
 
 // Standart requires
-const { StatusCode } = require('http-status-codes');
+const StatusCode = require('http-status-codes').StatusCodes;
 
 // Library requires
 

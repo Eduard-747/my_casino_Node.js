@@ -3,11 +3,12 @@
 const baseJoi = require('joi');
 const passwordValidator = require('password-validator');
 const schema = new passwordValidator();
+const StatusCode = require('http-status-codes').StatusCodes;
 
 // Framework requires
 
 // Local requires
-
+const error = require('../util/Error');
 
 let UserJoi = baseJoi.extend((joi) => {
 
@@ -68,7 +69,9 @@ let validate = async (body, sheme) => {
     const userSchema = UserJoi.object(sheme);
     const res = userSchema.validate(body);
     if (res.error) {
-        throw new Error(res.error.message);
+        error.ValidationError.attributes = res.error.details[0].path;
+        error.ValidationError.message = res.error.message;
+        throw new Error(res.error.message, { cause: { type: error.ValidationError, StatusCode: StatusCode.BAD_REQUEST } });
     }
     return res.value;
 }

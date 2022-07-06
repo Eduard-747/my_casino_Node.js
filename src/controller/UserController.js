@@ -1,7 +1,7 @@
 
 // Standart requires
 const router = require('express').Router();
-const { StatusCode } = require('http-status-codes');
+const StatusCode = require('http-status-codes').StatusCodes;
 
 // Library requires
 
