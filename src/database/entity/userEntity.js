@@ -1,6 +1,6 @@
 
 // Standard requires
-const EntitySchema = require('typeorm').EntitySchema;
+const { EntitySchema } = require('typeorm');
 
 // Library requires
 
